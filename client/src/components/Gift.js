@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import closeModal from "../images/close.svg";
 
+//this page is for the registry cards
 const Gift = ({
   experiences,
   gift,
@@ -30,6 +31,7 @@ const Gift = ({
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
+  //return each animated card
   return (
     <motion.div
       ref={ref}

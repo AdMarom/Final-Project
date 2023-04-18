@@ -6,11 +6,18 @@ import { useQuery } from "@apollo/client";
 import auth from "../../utils/auth";
 import { QUERY_ME } from "../../utils/queries";
 
+
 const Rsvp = () => {
+
+  // here we will use data from query one user
   const { data } = useQuery(QUERY_ME);
 
+  // if data doesn't exist use empty {}
   const userData = data?.me || {};
 
+  console.log("RSVP...", userData);
+
+  // if user is not logged in they will not be able to view this page 
   if (!auth.loggedIn()) {
     return (
       <h1 className="d-flex flex-row justify-content-center">
@@ -19,6 +26,7 @@ const Rsvp = () => {
     );
   }
 
+  // return components
   return (
     <section className="contact">
       <PageHeader title="RSVP" description="Please go ahead and" />

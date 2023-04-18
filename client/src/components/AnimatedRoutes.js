@@ -9,6 +9,7 @@ import Dashboard from "../pages/dashboard/Dasboard";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
+//animated routes for the nav bar
 const AnimatedRoutes = ({ personalDetails }) => {
   const location = useLocation();
 

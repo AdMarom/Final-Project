@@ -1,16 +1,19 @@
-//initial reference from week 22 instructor 17 EXAMPLE login.js 
-
+//import mustations and react
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 
+// need auth file to login users
 import Auth from '../../utils/auth';
 
+// User just needs to enter email to be authorized to login
 const Login = (props) => {
-  const [formState, setFormState] = useState({ email: ''});
+  const [formState, setFormState] = useState({ email: '' });
+  // use LOGIN_USER mutation to find user
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
+  //css styling for login model
   const styles = {
     form: {
       display: "flex",
@@ -44,7 +47,7 @@ const Login = (props) => {
       console.error(e);
     }
 
-    // clear form values
+    // Clear form values
     setFormState({
       // username: '',
       email: '',
@@ -52,18 +55,21 @@ const Login = (props) => {
     });
   };
 
-
+  // return browser view and functionality
   return (
     <main className="form" style={styles.form}>
       <div className="col-12 col-lg-10">
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
           <div className="card-body">
+
+            {/* if data is truthy it will return the <p> element */}
             {data ? (
               <p>
                 Welcome to our wedding hub{' '}
                 <Link to="/">back to the homepage.</Link>
               </p>
+              // else user will need to login with this form
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
@@ -74,7 +80,9 @@ const Login = (props) => {
                   value={formState.email}
                   onChange={handleChange}
                 />
-                {/* <input
+                {/* 
+                // removed so that users only need their email to login
+                <input
                   className="form-input"
                   placeholder="Password"
                   name="password"
@@ -91,7 +99,7 @@ const Login = (props) => {
                 </button>
               </form>
             )}
-
+            {/* error message will display if user not found */}
             {error && (
               <div className="my-3 p-3 bg-danger text-white">
                 {error.message}

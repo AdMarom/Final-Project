@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 
+
+//the display of what has been saved for rsvp
+
 const RsvpInfo = ({ name, email, rsvp }) => {
 
   // const { data } = useQuery(QUERY_ME);

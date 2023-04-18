@@ -1,3 +1,5 @@
+//component for registry button links 
+
 const RegistryLinks = () => {
     return(
         <div>

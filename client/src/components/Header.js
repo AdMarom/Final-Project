@@ -4,7 +4,7 @@ import Auth from "../utils/auth"
 import Login from "./Login";
 import { Link } from "react-router-dom";
 
-
+//the header component
 const Header = () => {
 
   const logout = (event) => {

@@ -1,6 +1,3 @@
-
-import aboutMeImg from "../images/d&B.png";
-import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
 import invitation from "../pages/reception/Reception-Invitation.pdf";
