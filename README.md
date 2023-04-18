@@ -20,13 +20,13 @@ We have different user stories based on the wedding participant:
 
 ## Description 
 Hitched is a  website hosted by the couple getting married where guests sign in using their email. 
-* Once logged in guests will be taken to a landing page with a picture of the couple and the wedding date and location. 
+* Once logged in, the guests (use brain@test.com) will be taken to a landing page with a picture of the couple and the wedding date and location. 
 * Users can use the navigation bar to navigate to an about me page, rsvp page, registry, and social media. 
 * On the rsvp page guests will input number of guests attending and dietary preferences. 
 * Guests can also pay a donation to the couples honeymoon as a wedding gift on the resistry page using stripe. 
 * On the social media page guests can post images and comments aswell as comment on other users images.
-* The engaged couple has a dashboard to view RSVPs and social pages.
-* Wedding Party guests have a specific "Reception" page for the rehearsal dinner.
+* The engaged couple (use db@test.com) has a dashboard to view RSVPs and social pages.
+* Wedding Party guests (use wally@test.com) have a specific "Reception" page for the rehearsal dinner.
 
 
 
@@ -122,7 +122,10 @@ npm run develop
 
   [Live website](https://hitched.herokuapp.com/)
 
-## Mock Up
+  * Login as brain@test.com to access as a regular guest
+  * Login as wally@test.com to access as a wedding party guest.
+  * Login as db@test.com to access as the engaged couple.
+
 
 ## Mock Up
 
