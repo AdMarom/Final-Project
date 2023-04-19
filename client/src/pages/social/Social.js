@@ -15,6 +15,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../utils/mutations";
 import Like from "./Like";
 import { QUERY_USERS } from "../../utils/queries";
+import CardGroup from "react-bootstrap/CardGroup";
 import Actives from "./Actives";
 
 export default function Social() {
@@ -67,13 +68,12 @@ export default function Social() {
         title="Social Media"
         description="Our personal page for wedding"
       />
-
+      <div className="d-flex mb-3">
+        <SocialForm />
+      </div>
       <div className="container-fluid d-flex w-100 justify-content-around flex-wrap testing">
         <Actives />
         <div className="posts-container">
-          <div className="d-flex mb-3">
-            <SocialForm />
-          </div>
           {postData.length === 0 ? (
             <h1 style={{ color: "white" }}>Be the first to post something!</h1>
           ) : (
