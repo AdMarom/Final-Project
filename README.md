@@ -113,7 +113,7 @@ Hitched is a  website hosted by the couple getting married where guests sign in 
   ```
 
 ## Usage
-1. You can access the file in the GitHub repository: https://github.com/AdMarom/Final-Project
+1. You can access the file in the GitHub repository: https://github.com/AdMarom/Hitched-Wedding-App
 2. Run the application in the terminal using this command: 
 ```
 npm run develop
