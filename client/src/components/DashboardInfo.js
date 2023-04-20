@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 //This page displays a table for all the guest and their RSVP status
@@ -25,10 +25,11 @@ const DashboardInfo = ({ userData }) => {
           <div className="contentContainer flex">
             {/* style={{'width':'100%','alignItems':'center', 'justifyContent': 'center'}} */}
 
-            <div>
+            <div  >
               <table
                 id="guests_table"
-                className="table table-striped table-bordered"
+                className="table"
+                style={{'width':'1200px', 'height':'auto', 'backgroundColor':'white', 'borderRadius':'5px', 'alignItems':'center', 'justifyContent': 'center', 'fontFamily': 'futura',}}
               >
                 {/* // style={{'width':'100%', 'backgroundColor':'rgba(255, 255, 255, 0.513)', 'borderRadius':'3px', 'alignItems':'center', 'justifyContent': 'center'}} */}
                 <thead>
@@ -51,7 +52,10 @@ const DashboardInfo = ({ userData }) => {
                       ) : (
                         <tr>
                           <td>{item.username}</td>
-                          <td>{item.email}</td>
+                          {/* <td>{item.email}</td> */}
+                          <td>
+                          <a href="mailto:{item.email}" style={{'color':'black'}}> {item.email} </a>
+                          </td>
                           {item.weddingparty ? <td>Yes</td> : <td>No</td>}
                           {item.rsvp ? (
                             <>

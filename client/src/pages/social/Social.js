@@ -1,29 +1,31 @@
 import React from "react";
-import { useState } from "react";
+//import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/esm/Col";
+//import Row from "react-bootstrap/Row";
+//import Col from "react-bootstrap/esm/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import PageHeader from "../../components/PageHeader";
 import { QUERY_POSTS } from "../../utils/queries";
 import SocialForm from "./SocialForm";
 import { AddComment } from "./AddComment";
 import auth from "../../utils/auth";
-import Button from "react-bootstrap/Button";
-import { useMutation } from "@apollo/client";
-import { DELETE_POST } from "../../utils/mutations";
+//import Button from "react-bootstrap/Button";
+//import { useMutation } from "@apollo/client";
+//import { DELETE_POST } from "../../utils/mutations";
 import Like from "./Like";
-import { QUERY_USERS } from "../../utils/queries";
-import CardGroup from "react-bootstrap/CardGroup";
+//import { QUERY_USERS } from "../../utils/queries";
+//import CardGroup from "react-bootstrap/CardGroup";
 import Actives from "./Actives";
 
 export default function Social() {
   //GETTING ALL THE DATA FROM POST
 
-  const { data, loading, error } = useQuery(QUERY_POSTS);
+  //const { data, loading, error } = useQuery(QUERY_POSTS);
+  const { data, loading } = useQuery(QUERY_POSTS);
 
-  const [deletePost] = useMutation(DELETE_POST);
+
+  //const [deletePost] = useMutation(DELETE_POST);
   //GETTING ALL THE DATA FROM POST
   console.log(data, "@@@@@@@@@@@");
   const postData = data?.posts || [];
@@ -50,17 +52,17 @@ export default function Social() {
         </div>
       </div>
     );
-  const handleDelete = async (postId) => {
-    console.log(postId);
-    try {
-      const { data } = await deletePost({
-        variables: { postId },
-      });
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleDelete = async (postId) => {
+  //   console.log(postId);
+  //   try {
+  //     const { data } = await deletePost({
+  //       variables: { postId },
+  //     });
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <section className="about">
@@ -83,7 +85,7 @@ export default function Social() {
                   {userEmail === "db@test.com" ? (
                     <i
                       class="delBtn fa-regular fa-trash-can"
-                      onClick={() => handleDelete(post._id)}
+                    //  onClick={() => handleDelete(post._id)}
                     ></i>
                   ) : null}
                   <Card.Text className="postText">
