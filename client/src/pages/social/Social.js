@@ -2,32 +2,28 @@ import React from "react";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/esm/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import PageHeader from "../../components/PageHeader";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_USERS } from "../../utils/queries";
 import SocialForm from "./SocialForm";
 import { AddComment } from "./AddComment";
 import auth from "../../utils/auth";
-import Button from "react-bootstrap/Button";
 import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../utils/mutations";
 import Like from "./Like";
-import { QUERY_USERS } from "../../utils/queries";
-import CardGroup from "react-bootstrap/CardGroup";
+
 import Actives from "./Actives";
+import Profile from "./Profile";
 
 export default function Social() {
   //GETTING ALL THE DATA FROM POST
-
-  const { data, loading, error } = useQuery(QUERY_POSTS);
+  const { data, loading, error } = useQuery(QUERY_USERS);
 
   const [deletePost] = useMutation(DELETE_POST);
   //GETTING ALL THE DATA FROM POST
-  console.log(data, "@@@@@@@@@@@");
-  const postData = data?.posts || [];
-  console.log(postData);
+
+  const userData = data?.users || [];
+  console.log(userData);
 
   // THIS WILL PREVENT USERS WHO ARE NOT LOGGED IN, TO HAVE ACCESS TO THE URL ENDPOINTS
   if (!auth.loggedIn()) {
@@ -63,88 +59,94 @@ export default function Social() {
   };
 
   return (
-    <section className="about">
+    <section className="about w-100">
       <PageHeader
         title="Social Media"
         description="Our personal page for wedding"
       />
-      <div className="d-flex mb-3">
-        <SocialForm />
-      </div>
-      <div className="container-fluid d-flex w-100 justify-content-around flex-wrap testing">
-        <Actives />
-        <div className="posts-container">
-          {postData.length === 0 ? (
-            <h1 style={{ color: "white" }}>Be the first to post something!</h1>
-          ) : (
-            postData.map((post) => {
-              return (
-                <Card className="card-main">
-                  {userEmail === "db@test.com" ? (
-                    <i
-                      class="delBtn fa-regular fa-trash-can"
-                      onClick={() => handleDelete(post._id)}
-                    ></i>
-                  ) : null}
-                  <Card.Text className="postText">
-                    <h4 className="d-flex justify-content-between">
-                      {post.postAuthor} <Like postInfo={post} />
-                    </h4>
-                    <p> {post.content}</p>
-                  </Card.Text>
 
-                  {post.image ? (
-                    <Card.Img
-                      variant="top"
-                      src={post.image}
-                      className="post-image"
-                    />
-                  ) : null}
-                  {/* <Card.Text className="postCreate">{post.createdAt}</Card.Text> */}
+      <div className="d-flex mb-3 w-100 flex-wrap">
+        <Profile />;
+        <div className="w-75 border">
+          {userData.map((user) => {
+            return (
+              <div
+                className="d-flex flex-wrap flex-row-reverse justify-content-center
+            "
+              >
+                {user.posts.map((post) => {
+                  return (
+                    <Card style={{ width: "18rem" }} className="m-1">
+                      {userEmail === "db@test.com" ? (
+                        <i
+                          class="delBtn fa-regular fa-trash-can"
+                          onClick={() => handleDelete(post._id)}
+                        ></i>
+                      ) : null}
 
-                  <Card.Body>
-                    <div className="comment-section">
-                      <Card.Text>Comments</Card.Text>
-                      <ListGroup
-                        variant="flush"
-                        className="overflow-auto"
-                        style={{ height: "7rem" }}
-                      >
-                        {post.comments.length === 0 ? (
-                          <Card.Text>"be the first to comment.."</Card.Text>
-                        ) : (
-                          post.comments.map((comment) => {
-                            return (
-                              <ListGroup.Item className="commentText">
-                                {comment.commentAuthor}: {comment.commentText}
-                              </ListGroup.Item>
-                            );
-                          })
-                        )}
-                      </ListGroup>
-                    </div>
+                      <Card.Header>
+                        <Card.Img
+                          className="rounded"
+                          variant="top"
+                          style={{ width: "50px", height: "50px" }}
+                          src={user.profilePic}
+                        />{" "}
+                        {user.username}
+                      </Card.Header>
 
-                    <div className="like-section">
-                      <Card.Subtitle>{post.likes.length} likes</Card.Subtitle>
-                      <div className="likers overflow-auto">
-                        {post.likes
-                          ? post.likes.map((like) => {
-                              return (
-                                <ListGroup.Item className="fst-italic">
-                                  {like.name}
-                                </ListGroup.Item>
-                              );
-                            })
-                          : null}
-                      </div>
-                    </div>
+                      <Card.Body>
+                        {post.image ? <Card.Img src={post.image} /> : null}
+                        <Card.Title>{post.content}</Card.Title>
+                      </Card.Body>
+                      {/* COMMENTS AND LIKES */}
+                      <Card.Body>
+                        <div className="comment-section">
+                          <Card.Text>Comments</Card.Text>
+                          <ListGroup
+                            variant="flush"
+                            className="overflow-auto"
+                            style={{ height: "7rem" }}
+                          >
+                            {post.comments.length === 0 ? (
+                              <Card.Text>"be the first to comment.."</Card.Text>
+                            ) : (
+                              post.comments.map((comment) => {
+                                return (
+                                  <ListGroup.Item className="commentText">
+                                    {comment.commentAuthor}:{" "}
+                                    {comment.commentText}
+                                  </ListGroup.Item>
+                                );
+                              })
+                            )}
+                          </ListGroup>
+                        </div>
 
-                    <AddComment postId={post._id} postLikes={post.likes} />
-                  </Card.Body>
-                </Card>
-              );
-            })
-          )}
+                        <div className="like-section">
+                          <Card.Subtitle>
+                            {post.likes.length} <Like postInfo={post} />
+                          </Card.Subtitle>
+                          <div className="likers overflow-auto">
+                            {post.likes
+                              ? post.likes.map((like) => {
+                                  return (
+                                    <ListGroup.Item className="fst-italic">
+                                      {like.name}
+                                    </ListGroup.Item>
+                                  );
+                                })
+                              : null}
+                          </div>
+                        </div>
+
+                        <AddComment postId={post._id} postLikes={post.likes} />
+                      </Card.Body>
+                    </Card>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

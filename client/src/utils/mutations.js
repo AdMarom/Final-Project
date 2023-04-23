@@ -64,11 +64,11 @@ export const ADD_REGISTRY_ITEM = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation addPost($postAuthor: String!, $content: String!, $image: String) {
-    addPost(postAuthor: $postAuthor, content: $content, image: $image) {
-      content
-      postAuthor
-      image
+  mutation addPost($content: String!, $image: String) {
+    addPost(content: $content, image: $image) {
+      username
+      profilePic
+      email
     }
   }
 `;
@@ -96,16 +96,23 @@ export const DELETE_POST = gql`
   mutation deletePost($postId: String!) {
     deletePost(postId: $postId) {
       content
-      postAuthor
     }
   }
-`
+`;
 
 export const ADD_LIKE = gql`
   mutation addLike($postId: String!) {
     addLike(postId: $postId) {
       content
-      postAuthor
     }
   }
-`
+`;
+
+export const ADD_PROFILEPIC = gql`
+  mutation addProfilePic($profileLink: String!) {
+    addProfilePic(profileLink: $profileLink) {
+      username
+      profilePic
+    }
+  }
+`;

@@ -15,11 +15,19 @@ export const QUERY_USERS = gql`
         specialFood
         foodAllergy
       }
+      profilePic
       posts {
         _id
         content
-        postAuthor
         image
+        comments {
+          commentText
+          commentAuthor
+        }
+        likes {
+          name
+          userId
+        }
       }
     }
   }
@@ -33,6 +41,7 @@ export const QUERY_ME = gql`
       email
       weddingparty
       couple
+      profilePic
       rsvp {
         response
         guests
@@ -42,7 +51,6 @@ export const QUERY_ME = gql`
       }
       posts {
         content
-        postAuthor
       }
     }
   }
@@ -52,13 +60,11 @@ export const QUERY_POSTS = gql`
   {
     posts {
       _id
-      postAuthor
       content
       image
       createdAt
       likes {
         name
-        userId
       }
       comments {
         commentText
