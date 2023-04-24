@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../utils/mutations";
 import auth from "../../utils/auth";
 import ImageUploading from "react-images-uploading";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_POSTS, QUERY_USERS } from "../../utils/queries";
 
 export default function SocialForm() {
   //BOOTSTRAP MODAL
@@ -18,11 +18,11 @@ export default function SocialForm() {
   const [addPost, { error, data }] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
       try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
+        const { users } = cache.readQuery({ query: QUERY_USERS });
 
         cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [...posts, addPost] },
+          query: QUERY_USERS,
+          data: { users: [...users, addPost] },
         });
       } catch (e) {
         console.error(e);
@@ -48,7 +48,7 @@ export default function SocialForm() {
     //this will take the author and the content
     setFormPost({
       ...formPost,
-      postAuthor: auth.getProfile().data.username,
+
       content: value,
     });
   };
@@ -69,7 +69,6 @@ export default function SocialForm() {
     }
 
     setFormPost({
-      postAuthor: "",
       content: "",
       image: "",
     });

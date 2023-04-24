@@ -10,24 +10,22 @@ const postSchema = new Schema({
   },
   likes: [
     {
-      name:
-      {
+      name: {
         type: String,
-        required: true
+        required: true,
       },
       userId: {
         type: String,
-        required: true
-      }
-    }
-
+        required: true,
+      },
+    },
   ],
   //edited postAuthor
-  postAuthor: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  // postAuthor: {
+  //   type: String,
+  //   required: true,
+  //   trim: true,
+  // },
   image: {
     data: Buffer,
     type: String,

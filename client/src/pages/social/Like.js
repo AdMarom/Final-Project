@@ -1,11 +1,12 @@
 import { ADD_LIKE } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_POSTS, QUERY_USERS } from "../../utils/queries";
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import auth from "../../utils/auth";
 import Button from "react-bootstrap/esm/Button";
 export default function Like({ postInfo }) {
+  console.log(postInfo, " LIKES");
   //GETTING THE CURRENT USER ID
   const currentUserId = auth.getProfile().data._id;
 
@@ -13,11 +14,11 @@ export default function Like({ postInfo }) {
   const [addLike, { error, data }] = useMutation(ADD_LIKE, {
     update(cache, { data: { addLike } }) {
       try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
+        const { users } = cache.readQuery({ query: QUERY_USERS });
 
         cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [...posts, addLike] },
+          query: QUERY_USERS,
+          data: { users: [...users, addLike] },
         });
       } catch (e) {
         console.error(e);

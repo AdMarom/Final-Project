@@ -26,7 +26,7 @@ const resolvers = {
       console.log(context);
       if (context.user) {
         console.log(context.user);
-        return User.findOne({ _id: context.user._id }).populate("posts"); 
+        return User.findOne({ _id: context.user._id }).populate("posts");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -41,20 +41,23 @@ const resolvers = {
       return { token, user };
     },
     //add a post
-    addPost: async (parent, { content, postAuthor, image }) => {
-      const newPost = await Post.create({ content, postAuthor, image });
+    addPost: async (parent, { content, image }, context) => {
+      if (context.user) {
+        const newPost = await Post.create({ content, image });
 
-      await User.findOneAndUpdate(
-        { username: postAuthor },
-        { $addToSet: { posts: newPost._id } }
-      );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { posts: newPost._id } }
+        );
 
-      return newPost;
+        return User;
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     //delete a post
     deletePost: async (parent, { postId }) => {
-      await Post.findOneAndDelete({ _id: postId })
-      return Post
+      await Post.findOneAndDelete({ _id: postId });
+      return Post;
     },
     //add a comment to a post
     addComment: async (parent, { postId, commentText, commentAuthor }) => {
@@ -67,6 +70,19 @@ const resolvers = {
           new: true,
         }
       );
+    },
+    addProfilePic: async (parent, { profileLink }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $set: { profilePic: profileLink },
+          },
+          {
+            new: true,
+          }
+        );
+      }
     },
     //login
     login: async (parent, { email, password }) => {
@@ -122,7 +138,7 @@ const resolvers = {
     changeRsvp: async (
       parent,
       { response, guests, children, specialFood, foodAllergy }
-    ) => { },
+    ) => {},
 
     //addRegistryItem will return user
     addRegistryItem: async (parent, { registryItem }, context) => {
@@ -136,22 +152,18 @@ const resolvers = {
     //add LIke to a post
     addLike: async (parent, { postId }, context) => {
       if (context.user) {
-        const userInfo = context.user.username
-        console.log(userInfo)
+        const userInfo = context.user.username;
+        console.log(userInfo);
         const likedPost = await Post.findOneAndUpdate(
           { _id: postId },
           { $push: { likes: { name: userInfo, userId: context.user._id } } },
           { new: true }
-        )
-        return likedPost
+        );
+        return likedPost;
       }
 
-
       throw new AuthenticationError("You need to be logged in!");
-
-
-    }
-
+    },
   },
 };
 

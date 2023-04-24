@@ -10,6 +10,7 @@ const typeDefs = gql`
     posts: [Post]
     registryItem: String
     rsvp: Rsvp
+    profilePic: String
   }
   type Comment {
     commentText: String
@@ -17,12 +18,9 @@ const typeDefs = gql`
     createdAt: String
   }
 
- 
-
   type Post {
     _id: ID
     content: String
-    postAuthor: String
     createdAt: String
     image: String
     comments: [Comment]
@@ -58,7 +56,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!): Auth
-    addPost(content: String!, postAuthor: String!, image: String): Post
+    addPost(content: String!, image: String): User
     addComment(
       postId: String!
       commentText: String!
@@ -79,10 +77,10 @@ const typeDefs = gql`
       foodAllergy: String
     ): User
     addRegistryItem(registryItem: String, userId: ID): User
-      deletePost(postId: String): Post
+    deletePost(postId: String): Post
     addLike(postId: String): Post
+    addProfilePic(profileLink: String): User
   }
-
 `;
 
 module.exports = typeDefs;

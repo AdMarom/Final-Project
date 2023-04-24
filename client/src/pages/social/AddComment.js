@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../../utils/mutations";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_POSTS, QUERY_USERS } from "../../utils/queries";
 import { useState } from "react";
 import auth from "../../utils/auth";
 export function AddComment({ postId }) {
@@ -17,11 +17,11 @@ export function AddComment({ postId }) {
   const [addComment, { error, data }] = useMutation(ADD_COMMENT, {
     update(cache, { data: { addComment } }) {
       try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
+        const { users } = cache.readQuery({ query: QUERY_USERS });
 
         cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [...posts, addComment] },
+          query: QUERY_USERS,
+          data: { users: [...users, addComment] },
         });
       } catch (e) {
         console.error(e);

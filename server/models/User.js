@@ -35,7 +35,11 @@ const userSchema = new Schema(
         ref: "Post",
       },
     ],
-
+    profilePic: {
+      type: String,
+      data: Buffer,
+      trim: true,
+    },
   },
   // set this to use virtual below
   {
@@ -44,7 +48,6 @@ const userSchema = new Schema(
     },
   }
 );
-
 
 const User = model("User", userSchema);
 
